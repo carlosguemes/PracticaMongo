@@ -64,13 +64,12 @@ public class ApplicationController {
     @PutMapping(value="updateEmpleado")
     public String updateEmpleado(@RequestBody Map<String, Object> requestBody){
         int result = -2;
-        String id = (String) requestBody.get("_id");
         String emp_no = (String) requestBody.get("empNo");
         String nombre = (String) requestBody.get("nombre");
         String apellido = (String) requestBody.get("apellido");
         //int calculo = ((Number) requestBody.get("calculo")).intValue();
 
-        Empleados emp = empleadoService.updateEmpleado(id, emp_no, nombre, apellido);
+        Empleados emp = empleadoService.updateEmpleado(emp_no, nombre, apellido);
 
         try{
             result = empleadoService.saveEmpleado(emp);

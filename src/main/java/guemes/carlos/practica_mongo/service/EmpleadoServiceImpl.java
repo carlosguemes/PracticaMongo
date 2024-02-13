@@ -52,14 +52,12 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     }
 
     @Override
-    public Empleados updateEmpleado(String id, String emp_no, String nombre, String apellidos) {
+    public Empleados updateEmpleado(String emp_no, String nombre, String apellidos) {
         Empleados empleado = null;
         boolean encontrado = true;
         try{
-            empleado = empleadoRepository.findById(id).get();
-            System.out.println(empleado.getEmpNo());
-            System.out.println(empleado.getNombre());
-            System.out.println(empleado.getApellido());
+            empleado = empleadoRepository.findById(emp_no).get();
+
         }
         catch (Exception e){
             System.out.println("Error manin: " + e.getMessage());

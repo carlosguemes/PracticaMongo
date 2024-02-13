@@ -12,6 +12,6 @@ public interface EmpleadoService {
     public int saveAll(List<Empleados> empleado);
     public List<Empleados> findByNombre(String name);
     public List<Empleados> findBySalarioGreaterThan(Float salario);
-    public Empleados updateEmpleado(String id, String emp_no, String nombre, String apellidos);
+    public Empleados updateEmpleado(String emp_no, String nombre, String apellidos);
     public int deleteEmpleado (String id);
 }
