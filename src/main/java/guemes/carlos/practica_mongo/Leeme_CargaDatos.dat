@@ -1,0 +1,8 @@
+Lanzar SaveOne con los siguientes datos en el Body, para tener datos y poder realizar las consultas
+localhost:8082/saveAll
+
+[{"empNo":1, "nombre": "Pedro", "apellido":"Ciria", "departamentos": {"deptNo":"10"}},
+{"empNo":2, "nombre": "Juan", "apellido":"Perez", "departamentos": {"deptNo":"20"}},
+{"empNo":3, "nombre": "Sergio", "apellido":"Gonzalez", "departamentos": {"deptNo":"10"}},
+{"empNo":4, "nombre": "Javier", "apellido":"Montes", "departamentos": {"deptNo":"20"}},
+{"empNo":5, "nombre": "Sonia", "apellido":"Rodriguez", "departamentos": {"deptNo":"10"}}]
