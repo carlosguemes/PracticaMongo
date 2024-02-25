@@ -126,9 +126,30 @@ public class ApplicationController {
         return moviesService.findAll();
     }
 
+    @GetMapping(value="movies/findByTitle")
+    public String findByTitle(@RequestBody Map<String, Object> requestBody){
+        String titulo = (String) requestBody.get("title");
+        boolean encontrado = true;
+
+        Movies pelicula = null;
+
+        try{
+            pelicula = moviesService.findByTitle(titulo);
+        }
+        catch (Exception e){
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        if (pelicula != null)
+            return pelicula.toString();
+
+        else
+            return "No se ha podido encontrar una película con el título indicado";
+    }
+
     // Postman:localhost:8082/movies/findByGenres
     @GetMapping(value="movies/findByGenres")
-    public String findByTitle(@RequestBody Map<String, Object> requestBody) {
+    public String findByGenres(@RequestBody Map<String, Object> requestBody) {
         StringBuilder sb = new StringBuilder();
         int i = 1;
         List<String> generos = (List<String>) requestBody.get("genres");
