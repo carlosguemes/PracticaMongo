@@ -1,7 +1,7 @@
 package guemes.carlos.practica_mongo.service;
 
+import guemes.carlos.practica_mongo.jpa.Empleados;
 import guemes.carlos.practica_mongo.jpa.Movies;
-import guemes.carlos.practica_mongo.repository.EmpleadoRepository;
 import guemes.carlos.practica_mongo.repository.MoviesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +13,12 @@ public class MoviesServiceImpl implements MoviesService {
 
     @Autowired
     private MoviesRepository moviesRepository;
+
+    @Override
+    public int savePelicula(Movies pelicula) {
+        Movies result = moviesRepository.save(pelicula);
+        return null==result?0:1;
+    }
 
     @Override
     public List<Movies> findAll() {
@@ -44,5 +50,27 @@ public class MoviesServiceImpl implements MoviesService {
     @Override
     public List<Movies> findByGenres(List<String> generos) {
         return moviesRepository.findByGenres(generos);
+    }
+
+    @Override
+    public Movies updatePelicula(String id, String titulo, int anyo) {
+        Movies pelicula = null;
+        boolean encontrado = true;
+        try{
+            pelicula = moviesRepository.findById(id).get();
+
+        }
+        catch (Exception e){
+            System.out.println("Error: " + e.getMessage());
+            encontrado = false;
+        }
+
+        if (encontrado){
+            pelicula.setTitle(titulo);
+            pelicula.setYear(anyo);
+            return pelicula;
+        }
+        else
+            return null;
     }
 }

@@ -135,9 +135,8 @@ public class ApplicationController {
 
         List<Movies> peliculas = moviesService.findByGenres(generos);
 
-        if (peliculas == null)
-            sb.append("No se ha podido encontrar una película con ese título");
-
+        if (peliculas == null || peliculas.isEmpty())
+            sb.append("No se ha podido encontrar una película con ese o esos géneros");
 
         else{
             for (Movies pelicula: peliculas){
@@ -147,6 +146,32 @@ public class ApplicationController {
             }
         }
     return sb.toString();
+    }
+
+    //Postman: localhost:8082/movies/updatePelicula
+    @PutMapping(value="movies/updatePelicula")
+    public String updatePelicula(@RequestBody Map<String, Object> requestBody){
+        int result = -2;
+        String id = (String) requestBody.get("id");
+        String titulo = (String) requestBody.get("title");
+        int anyo = ((Number) requestBody.get("year")).intValue();
+
+        Movies pelicula = moviesService.updatePelicula(id, titulo, anyo);
+
+        try{
+            result = moviesService.savePelicula(pelicula);
+        }
+        catch (Exception e){
+            return "No se ha podido encontrar la película con el ID proporcionado";
+        }
+
+        if (result == 1){
+            return "Película actualizado correctamente";
+        }
+
+        else
+            return "No se ha podido actualizar la película";
+
     }
 
 }
