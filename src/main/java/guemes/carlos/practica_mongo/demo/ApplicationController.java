@@ -166,7 +166,7 @@ public class ApplicationController {
                 sb.append("\n\n");
             }
         }
-    return sb.toString();
+        return sb.toString();
     }
 
     //Postman: localhost:8082/movies/updatePelicula
@@ -195,5 +195,26 @@ public class ApplicationController {
 
     }
 
+    // Postman:localhost:8082/updateEmpleado
+    @DeleteMapping(value="movies/deletePelicula")
+    public String deletePelicula(@RequestBody Map<String, Object> requestBody){
+        int result = -2;
+        String id = (String) requestBody.get("id");
+
+        try{
+            result = moviesService.deletePelicula(id);
+        }
+        catch (Exception e){
+            return "No se ha podido encontrar la película con el ID proporcionado";
+        }
+
+        if (result == 1){
+            return "Película eliminada correctamente";
+        }
+
+        else
+            return "No se ha podido eliminar la película";
+
+    }
 }
 

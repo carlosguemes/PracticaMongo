@@ -17,4 +17,6 @@ public interface MoviesService {
 
     public Movies updatePelicula(String id, String titulo, int anyo);
 
+    public int deletePelicula(String id);
+
 }
