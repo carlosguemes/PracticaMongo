@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import guemes.carlos.practica_mongo.jpa.Empleados;
+import guemes.carlos.practica_mongo.jpa.Movies;
 import guemes.carlos.practica_mongo.service.EmpleadoService;
+import guemes.carlos.practica_mongo.service.MoviesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,11 +15,14 @@ import org.springframework.web.bind.annotation.*;
 public class ApplicationController {
 
     //Inyección del Servicio.
+    /*@Autowired
+    private EmpleadoService empleadoService;*/
+
     @Autowired
-    private EmpleadoService empleadoService;
+    private MoviesService moviesService;
 
 
-    @GetMapping(value="find/{idEmpleado}/nombre/{nombre}")
+    /*@GetMapping(value="find/{idEmpleado}/nombre/{nombre}")
     public boolean findById2(@PathVariable("idEmpleado")String idEmpleado,
                              @PathVariable("nombre") String nombre) {
         Empleados empleado = null;
@@ -28,7 +33,7 @@ public class ApplicationController {
     }
 
 
-    @GetMapping(value="findAll")
+    /*@GetMapping(value="findAll")
     public List<Empleados> findAll() {
         System.out.println("findAll");
         return empleadoService.findAll();
@@ -108,6 +113,40 @@ public class ApplicationController {
         else
             return "No se ha podido eliminar al empleado";
 
+    }*/
+
+
+    //MOVIES
+
+
+    // Postman:localhost:8082/movies/findAll
+    @GetMapping(value="movies/findAll")
+    public List<Movies> findAll() {
+        System.out.println("findAll");
+        return moviesService.findAll();
+    }
+
+    // Postman:localhost:8082/movies/findByGenres
+    @GetMapping(value="movies/findByGenres")
+    public String findByTitle(@RequestBody Map<String, Object> requestBody) {
+        StringBuilder sb = new StringBuilder();
+        int i = 1;
+        List<String> generos = (List<String>) requestBody.get("genres");
+
+        List<Movies> peliculas = moviesService.findByGenres(generos);
+
+        if (peliculas == null)
+            sb.append("No se ha podido encontrar una película con ese título");
+
+
+        else{
+            for (Movies pelicula: peliculas){
+                sb.append("Película " + i++ + ": \n");
+                sb.append(pelicula.toString());
+                sb.append("\n\n");
+            }
+        }
+    return sb.toString();
     }
 
 }
