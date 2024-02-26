@@ -54,22 +54,28 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     @Override
     public Empleados updateEmpleado(String emp_no, String nombre, String apellidos) {
         Empleados empleado = null;
+        //Variable para saber si el empleado ha sido encontrado
         boolean encontrado = true;
+
+        //Intentamos encontrar el empleado con el id pasado por parámetro
         try{
             empleado = empleadoRepository.findById(emp_no).get();
 
         }
         catch (Exception e){
-            System.out.println("Error manin: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
             encontrado = false;
         }
 
+        //Si ha encontrado al empleado se actualiza y se devuelve al empleado
         if (encontrado){
             empleado.setNombre(nombre);
             empleado.setApellido(apellidos);
             System.out.println("Nombre actualizado: " + empleado.getNombre());
             return empleado;
         }
+
+        //Si no lo encuentra devolverá null, por lo que no se actualizará
         else
             return null;
     }
@@ -77,19 +83,25 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     @Override
     public int deleteEmpleado(String id) {
         Empleados empleado = null;
+        //Variable para saber si el empleado ha sido encontrado
         boolean encontrado = true;
+
+        //Intentamos encontrar el empleado con el id pasado por parámetro
         try{
             empleado = empleadoRepository.findById(id).get();
         }
         catch (Exception e){
-            System.out.println("Error manin: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
             encontrado = false;
         }
 
+        //Si ha encontrado al empleado se elimina y se devuelve un número positivo
         if (encontrado){
             empleadoRepository.delete(empleado);
             return 1;
         }
+
+        //Si no lo encuentra devolverá un número negativo, por lo que no se borrará
         else
             return -1;
     }

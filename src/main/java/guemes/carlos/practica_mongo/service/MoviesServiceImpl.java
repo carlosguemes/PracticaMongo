@@ -77,14 +77,23 @@ public class MoviesServiceImpl implements MoviesService {
     @Override
     public int deletePelicula(String id) {
         Movies pelicula = null;
+        boolean encontrado = true;
 
         try{
             pelicula = moviesRepository.findById(id).get();
         }
         catch (Exception e){
+            encontrado = false;
             System.out.println("Error al conseguir pelicula");
         }
 
-        return pelicula==null?0:1;
+        if (encontrado){
+            moviesRepository.delete(pelicula);
+            return 1;
+        }
+
+        else
+            return 0;
+
     }
 }

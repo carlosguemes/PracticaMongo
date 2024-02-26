@@ -69,11 +69,12 @@ public class ApplicationController {
     @PutMapping(value="updateEmpleado")
     public String updateEmpleado(@RequestBody Map<String, Object> requestBody){
         int result = -2;
+        //Recoger los datos del body en Postman
         String emp_no = (String) requestBody.get("empNo");
         String nombre = (String) requestBody.get("nombre");
         String apellido = (String) requestBody.get("apellido");
-        //int calculo = ((Number) requestBody.get("calculo")).intValue();
 
+        //Actualizamos el empleado
         Empleados emp = empleadoService.updateEmpleado(emp_no, nombre, apellido);
 
         try{
@@ -83,6 +84,7 @@ public class ApplicationController {
             return "No se ha podido encontrar al empleado con el ID proporcionado";
         }
 
+        //Si el update ha sido exitoso
         if (result == 1){
             return "Empleado actualizado correctamente";
         }
@@ -97,6 +99,8 @@ public class ApplicationController {
     @DeleteMapping(value="deleteEmpleado")
     public String deleteEmpleado(@RequestBody Map<String, Object> requestBody){
         int result = -2;
+
+        //Recoger el id del body de Postman
         String id = (String) requestBody.get("_id");
 
         try{
@@ -106,6 +110,7 @@ public class ApplicationController {
             return "No se ha podido encontrar al empleado con el ID proporcionado";
         }
 
+        //Si el delete ha sido exitoso
         if (result == 1){
             return "Empleado eliminado correctamente";
         }
@@ -205,7 +210,7 @@ public class ApplicationController {
             result = moviesService.deletePelicula(id);
         }
         catch (Exception e){
-            return "No se ha podido encontrar la película con el ID proporcionado";
+            return "No se ha podido eliminar la película";
         }
 
         if (result == 1){
@@ -213,7 +218,7 @@ public class ApplicationController {
         }
 
         else
-            return "No se ha podido eliminar la película";
+            return "No se ha podido encontrar la película con el ID proporcionado";
 
     }
 }
